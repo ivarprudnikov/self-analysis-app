@@ -14,8 +14,18 @@ const getAnswers = async () => {
   return jsonValue != null ? JSON.parse(jsonValue) : null;
 };
 
-const Question = ({label}) => {
+const Question = ({label, value, onChange}) => {
   const [text, setText] = useState('');
+
+  useEffect(() => {
+    setText(value);
+  }, [value]);
+
+  const handleChange = (v) => {
+    setText(v);
+    onChange && onChange(v);
+  };
+
   return (
     <View>
       <Text style={{fontSize: 21, fontWeight: '600', marginBottom: 10}}>
@@ -25,7 +35,7 @@ const Question = ({label}) => {
         style={{height: 80, fontSize: 16}}
         multiline={true}
         placeholder="Type here your answer ..."
-        onChangeText={(t) => setText(t)}
+        onChangeText={handleChange}
         defaultValue={text}
       />
     </View>
@@ -65,7 +75,7 @@ export const Questions = () => {
     const getData = () => {
       getAnswers()
         .then((data) => {
-          setAnswers(data);
+          setAnswers(data || {});
           setLoading(false);
         })
         .catch(() => setLoading(false));
@@ -77,10 +87,21 @@ export const Questions = () => {
     return <Text>Loading ...</Text>;
   }
 
+  const updateAnswers = (k, v) => {
+    const updated = {...answers, [k]: v};
+    setAnswers(updated);
+    storeAnswers(updated);
+  };
+
   return (
     <>
       {questionsUiSchema.map((key) => (
-        <Question key={key} label={questionsDataSchema.properties[key].title} />
+        <Question
+          key={key}
+          label={questionsDataSchema.properties[key].title}
+          value={answers[key]}
+          onChange={(v) => updateAnswers(key, v)}
+        />
       ))}
     </>
   );
