@@ -1,6 +1,8 @@
 Self-analysis app
 =================
 
+![Node.js CI](https://github.com/ivarprudnikov/self-analysis-app/workflows/Node.js%20CI/badge.svg?branch=dev)
+
 It is an annual questionnaire which allows you to focus on your accomplishments and failures over the year. 
 The questions were suggested quite some time ago in the book called "Think and grow rich". Despite the book title being a bit cheesy, 
 and it's contents somewhat dated, the questions remain useful until this day.
