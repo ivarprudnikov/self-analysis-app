@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Text, TextInput, View} from 'react-native';
+import {Text, TextInput} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const STORAGE_KEY_ANSWERS = '@question-answers-v-1';
@@ -27,7 +27,7 @@ const Question = ({label, value, onChange}) => {
   };
 
   return (
-    <View>
+    <>
       <Text style={{fontSize: 21, fontWeight: '600', marginBottom: 10}}>
         {label}
       </Text>
@@ -38,7 +38,7 @@ const Question = ({label, value, onChange}) => {
         onChangeText={handleChange}
         defaultValue={text}
       />
-    </View>
+    </>
   );
 };
 
@@ -72,15 +72,19 @@ export const Questions = () => {
   const [answers, setAnswers] = useState({});
 
   useEffect(() => {
+    let mounted = true;
     const getData = () => {
       getAnswers()
         .then((data) => {
-          setAnswers(data || {});
-          setLoading(false);
+          mounted && setAnswers(data || {});
+          mounted && setLoading(false);
         })
-        .catch(() => setLoading(false));
+        .catch(() => {
+          mounted && setLoading(false);
+        });
     };
     getData();
+    return () => (mounted = false);
   }, [setLoading, setAnswers]);
 
   if (loading) {
