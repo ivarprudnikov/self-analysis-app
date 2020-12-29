@@ -1,8 +1,6 @@
-import React from 'react';
-import {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Text, TextInput, View} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useEffect} from 'react/cjs/react.production.min';
 
 const STORAGE_KEY_ANSWERS = '@question-answers-v-1';
 
@@ -63,17 +61,17 @@ export const Questions = () => {
   const [loading, setLoading] = useState(true);
   const [answers, setAnswers] = useState({});
 
-  // useEffect(() => {
-    // const getData = () => {
-      // getAnswers()
-      //   .then((data) => {
-      //     setAnswers(data);
-      //     setLoading(false);
-      //   })
-      //   .catch(() => setLoading(false));
-    // };
-    // getData();
-  // }, [setLoading, setAnswers]);
+  useEffect(() => {
+    const getData = () => {
+      getAnswers()
+        .then((data) => {
+          setAnswers(data);
+          setLoading(false);
+        })
+        .catch(() => setLoading(false));
+    };
+    getData();
+  }, [setLoading, setAnswers]);
 
   if (loading) {
     return <Text>Loading ...</Text>;
