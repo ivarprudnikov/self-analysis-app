@@ -22,3 +22,8 @@ npm run android
 ## License
 
 App is licensed under the GPL, which guarantees end users the freedom to study, share, and modify the software.
+
+## Development
+
+* react-native cli usage https://github.com/react-native-community/cli/blob/master/docs/commands.md
+* metro docs https://facebook.github.io/metro/docs/getting-started
