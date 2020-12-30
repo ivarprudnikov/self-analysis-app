@@ -62,7 +62,7 @@ export const Questions = () => {
   useEffect(() => {
     let mounted = true;
     const getData = () => {
-      getAnswers()
+      getAnswers(0)
         .then((data) => {
           mounted && setAnswers(data || {});
           mounted && setLoading(false);
@@ -82,7 +82,7 @@ export const Questions = () => {
   const updateAnswers = (k, v) => {
     const updated = {...answers, [k]: v};
     setAnswers(updated);
-    storeAnswers(updated);
+    storeAnswers(0, updated);
   };
 
   return (

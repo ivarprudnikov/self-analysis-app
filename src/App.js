@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -22,8 +22,12 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import {Questions} from './Questions';
+import {init} from './storage';
 
 const App: () => React$Node = () => {
+  useEffect(() => {
+    init();
+  }, []);
   return (
     <>
       <StatusBar barStyle="dark-content" />
