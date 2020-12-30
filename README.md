@@ -5,7 +5,16 @@ It is an annual questionnaire which allows you to focus on your accomplishments 
 The questions were suggested quite some time ago in the book called "Think and grow rich". Despite the book title being a bit cheesy, 
 and it's contents somewhat dated, the questions remain useful until this day.
 
+## License
+
+App is licensed under the GPL, which guarantees end users the freedom to study, share, and modify the software.
+
+## Development
+
 ## Running Locally
+
+* react-native cli usage https://github.com/react-native-community/cli/blob/master/docs/commands.md
+* metro docs https://facebook.github.io/metro/docs/getting-started
 
 ```shell
 # install dependencies
@@ -19,11 +28,13 @@ npm run ios
 npm run android
 ```
 
-## License
+### Using a device
 
-App is licensed under the GPL, which guarantees end users the freedom to study, share, and modify the software.
+https://reactnative.dev/docs/running-on-device
 
-## Development
+**iOS**
 
-* react-native cli usage https://github.com/react-native-community/cli/blob/master/docs/commands.md
-* metro docs https://facebook.github.io/metro/docs/getting-started
+* open `ios/` directory in Xcode
+* set up development account/team for signing (which should override the current one)
+* select the connected device and run the app
+* trust an app developer on the device https://support.apple.com/en-us/HT204460
