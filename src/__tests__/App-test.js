@@ -12,5 +12,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 it('renders correctly', () => {
   render(<App />);
-  expect(AsyncStorage.getItem).toHaveBeenCalledTimes(1);
+  expect(AsyncStorage.getItem).toHaveBeenCalledTimes(2);
+  expect(AsyncStorage.getItem).toHaveBeenLastCalledWith('@all');
 });
