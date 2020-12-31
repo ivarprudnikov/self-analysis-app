@@ -23,13 +23,14 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import {Questions} from './Questions';
 import {init} from './storage';
+import {ErrorBoundary} from './ErrorBoundary';
 
 const App: () => React$Node = () => {
   useEffect(() => {
     init();
   }, []);
   return (
-    <>
+    <ErrorBoundary>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
         <ScrollView
@@ -60,7 +61,7 @@ const App: () => React$Node = () => {
           </View>
         </ScrollView>
       </SafeAreaView>
-    </>
+    </ErrorBoundary>
   );
 };
 
