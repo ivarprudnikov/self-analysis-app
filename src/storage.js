@@ -60,9 +60,14 @@ export const init = async () => {
   }
 };
 
-const getAssessment = async (idx) => {
+export const getAssessments = async () => {
   const json = await getDb();
-  const assessment = json.assessments[idx];
+  return json.assessments || [];
+};
+
+const getAssessment = async (idx) => {
+  const assessments = await getAssessments();
+  const assessment = assessments[idx];
   return assessment && typeof assessment === 'object' ? assessment : null;
 };
 

@@ -3,18 +3,20 @@
  * @flow strict-local
  */
 import 'react-native-gesture-handler';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
+  ActivityIndicator,
   Button,
   StyleSheet,
   ScrollView,
   Text,
   View,
   StatusBar,
+  FlatList,
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {Questions} from './Questions';
-import {init} from './storage';
+import {getAssessments, init} from './storage';
 import {ErrorBoundary} from './ErrorBoundary';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -22,6 +24,23 @@ import {createStackNavigator} from '@react-navigation/stack';
 const Stack = createStackNavigator();
 
 function HomeScreen({navigation}) {
+  const [loading, setLoading] = useState(true);
+  const [assessments, setAssessments] = useState(null);
+
+  useEffect(() => {
+    const getData = () => {
+      getAssessments()
+        .then((data) => {
+          setAssessments(data || []);
+          setLoading(false);
+          console.log(data);
+        })
+        .catch(() => {
+          setLoading(false);
+        });
+    };
+    getData();
+  }, [setLoading, setAssessments]);
   return (
     <View style={styles.body}>
       <View
@@ -31,12 +50,21 @@ function HomeScreen({navigation}) {
         }}
       />
       <View style={styles.sectionContainer}>
-        <Button
-          title="Open your assessment"
-          onPress={() =>
-            navigation.navigate('Assessment', {assessmentIndex: 0})
-          }
-        />
+        {loading && <ActivityIndicator />}
+        {!!assessments && (
+          <FlatList
+            data={assessments}
+            renderItem={({index}) => (
+              <Button
+                title={'Assessment #' + index}
+                onPress={() =>
+                  navigation.navigate('Assessment', {assessmentIndex: index})
+                }
+              />
+            )}
+            keyExtractor={(item) => item.createdAt + ''}
+          />
+        )}
       </View>
     </View>
   );
