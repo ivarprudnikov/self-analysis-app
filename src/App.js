@@ -1,29 +1,60 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
  * @format
  * @flow strict-local
  */
-
+import 'react-native-gesture-handler';
 import React, {useEffect} from 'react';
 import {
-  SafeAreaView,
+  Button,
   StyleSheet,
   ScrollView,
   View,
-  Text,
   StatusBar,
+  ImageBackground,
 } from 'react-native';
-import {
-  Header,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {Questions} from './Questions';
 import {init} from './storage';
 import {ErrorBoundary} from './ErrorBoundary';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+
+const homeBg = require('./img/steinar-engeland-UtEUUNHvMLs-unsplash-medium.jpg');
+
+const Stack = createStackNavigator();
+
+function HomeScreen({navigation}) {
+  return (
+    <View style={styles.body}>
+      <View
+        style={{
+          height: 200,
+          backgroundColor: Colors.lighter,
+        }}
+      />
+      <View style={styles.sectionContainer}>
+        <Button
+          title="Open your assessment"
+          onPress={() => navigation.navigate('Assessment')}
+        />
+      </View>
+    </View>
+  );
+}
+
+function AssessmentScreen() {
+  return (
+    <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
+      style={styles.scrollView}>
+      <View style={styles.body}>
+        <View style={styles.sectionContainer}>
+          <Questions />
+        </View>
+      </View>
+    </ScrollView>
+  );
+}
 
 const App: () => React$Node = () => {
   useEffect(() => {
@@ -32,35 +63,16 @@ const App: () => React$Node = () => {
   return (
     <ErrorBoundary>
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Questions />
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-          </View>
-        </ScrollView>
-      </SafeAreaView>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen name="Assessment" component={AssessmentScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </ErrorBoundary>
   );
 };
@@ -75,6 +87,7 @@ const styles = StyleSheet.create({
   },
   body: {
     backgroundColor: Colors.white,
+    flex: 1,
   },
   sectionContainer: {
     marginTop: 32,
