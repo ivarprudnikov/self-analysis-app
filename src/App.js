@@ -8,9 +8,9 @@ import {
   Button,
   StyleSheet,
   ScrollView,
+  Text,
   View,
   StatusBar,
-  ImageBackground,
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {Questions} from './Questions';
@@ -18,8 +18,6 @@ import {init} from './storage';
 import {ErrorBoundary} from './ErrorBoundary';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-
-const homeBg = require('./img/steinar-engeland-UtEUUNHvMLs-unsplash-medium.jpg');
 
 const Stack = createStackNavigator();
 
@@ -35,21 +33,27 @@ function HomeScreen({navigation}) {
       <View style={styles.sectionContainer}>
         <Button
           title="Open your assessment"
-          onPress={() => navigation.navigate('Assessment')}
+          onPress={() =>
+            navigation.navigate('Assessment', {assessmentIndex: 0})
+          }
         />
       </View>
     </View>
   );
 }
 
-function AssessmentScreen() {
+function AssessmentScreen({route}) {
+  const {assessmentIndex} = route.params;
   return (
     <ScrollView
       contentInsetAdjustmentBehavior="automatic"
       style={styles.scrollView}>
       <View style={styles.body}>
         <View style={styles.sectionContainer}>
-          <Questions />
+          <Text style={styles.sectionTitle}>Assessment #{assessmentIndex}</Text>
+        </View>
+        <View style={styles.sectionContainer}>
+          <Questions assessmentIndex={assessmentIndex} />
         </View>
       </View>
     </ScrollView>
