@@ -50,7 +50,8 @@ export class ErrorBoundary extends React.Component {
             <Text style={styles.sectionTitle}>Something went wrong.</Text>
             <Text style={styles.sectionCode}>
               {this.state.error && this.state.error.toString()}
-              <br />
+            </Text>
+            <Text style={styles.sectionCode}>
               {this.state.errorInfo.componentStack}
             </Text>
           </View>

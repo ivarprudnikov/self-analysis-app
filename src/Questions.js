@@ -55,14 +55,14 @@ const questionsUiSchema = [
   'find_work_mistakes',
 ];
 
-export const Questions = () => {
+export const Questions = ({assessmentIndex = 0}) => {
   const [loading, setLoading] = useState(true);
   const [answers, setAnswers] = useState({});
 
   useEffect(() => {
     let mounted = true;
     const getData = () => {
-      getAnswers(0)
+      getAnswers(assessmentIndex)
         .then((data) => {
           mounted && setAnswers(data || {});
           mounted && setLoading(false);
@@ -73,7 +73,7 @@ export const Questions = () => {
     };
     getData();
     return () => (mounted = false);
-  }, [setLoading, setAnswers]);
+  }, [setLoading, setAnswers, assessmentIndex]);
 
   if (loading) {
     return <Text>Loading ...</Text>;
@@ -82,7 +82,7 @@ export const Questions = () => {
   const updateAnswers = (k, v) => {
     const updated = {...answers, [k]: v};
     setAnswers(updated);
-    storeAnswers(0, updated);
+    storeAnswers(assessmentIndex, updated);
   };
 
   return (

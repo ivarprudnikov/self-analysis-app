@@ -1,29 +1,92 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
  * @format
  * @flow strict-local
  */
-
-import React, {useEffect} from 'react';
+import 'react-native-gesture-handler';
+import React, {useEffect, useState} from 'react';
 import {
-  SafeAreaView,
+  ActivityIndicator,
+  Button,
   StyleSheet,
   ScrollView,
-  View,
   Text,
+  View,
   StatusBar,
+  FlatList,
 } from 'react-native';
-import {
-  Header,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {Questions} from './Questions';
-import {init} from './storage';
+import {getAssessments, init} from './storage';
 import {ErrorBoundary} from './ErrorBoundary';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+
+const Stack = createStackNavigator();
+
+function HomeScreen({navigation}) {
+  const [loading, setLoading] = useState(true);
+  const [assessments, setAssessments] = useState(null);
+
+  useEffect(() => {
+    const getData = () => {
+      getAssessments()
+        .then((data) => {
+          setAssessments(data || []);
+          setLoading(false);
+          console.log(data);
+        })
+        .catch(() => {
+          setLoading(false);
+        });
+    };
+    getData();
+  }, [setLoading, setAssessments]);
+  return (
+    <View style={styles.body}>
+      <View
+        style={{
+          height: 200,
+          backgroundColor: Colors.lighter,
+        }}
+      />
+      <View style={styles.sectionContainer}>
+        {loading && <ActivityIndicator />}
+        {!!assessments && (
+          <FlatList
+            data={assessments}
+            renderItem={({index}) => (
+              <Button
+                title={'Assessment #' + index}
+                onPress={() =>
+                  navigation.navigate('Assessment', {assessmentIndex: index})
+                }
+              />
+            )}
+            keyExtractor={(item) => item.createdAt + ''}
+          />
+        )}
+      </View>
+    </View>
+  );
+}
+
+function AssessmentScreen({route}) {
+  const {assessmentIndex} = route.params;
+  return (
+    <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
+      style={styles.scrollView}>
+      <View style={styles.body}>
+        <View style={styles.sectionContainer}>
+          <Text style={styles.sectionTitle}>Assessment #{assessmentIndex}</Text>
+        </View>
+        <View style={styles.sectionContainer}>
+          <Questions assessmentIndex={assessmentIndex} />
+        </View>
+      </View>
+    </ScrollView>
+  );
+}
 
 const App: () => React$Node = () => {
   useEffect(() => {
@@ -32,35 +95,16 @@ const App: () => React$Node = () => {
   return (
     <ErrorBoundary>
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Questions />
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-          </View>
-        </ScrollView>
-      </SafeAreaView>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen name="Assessment" component={AssessmentScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </ErrorBoundary>
   );
 };
@@ -75,6 +119,7 @@ const styles = StyleSheet.create({
   },
   body: {
     backgroundColor: Colors.white,
+    flex: 1,
   },
   sectionContainer: {
     marginTop: 32,
