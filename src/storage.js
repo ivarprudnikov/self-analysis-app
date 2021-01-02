@@ -90,6 +90,12 @@ const updateAssessment = async (idx, assessment) => {
   await updateDb(json);
 };
 
+export const deleteAssessment = async (idx) => {
+  const json = await getDb();
+  json.assessments.splice(idx, 1);
+  await updateDb(json);
+};
+
 export const getAnswers = async (idx) => {
   const assessment = await getAssessment(idx);
   return assessment != null ? assessment.answers : {};
