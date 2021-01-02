@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {createAssessment, deleteAssessment, getAssessments} from '../storage';
-import {ActivityIndicator, FlatList, View, Text} from 'react-native';
+import {ActivityIndicator, FlatList, View, Text, Modal} from 'react-native';
 import {useIsFocused} from '@react-navigation/native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {styles} from './styles';
@@ -8,6 +8,8 @@ import {ActionButton} from '../ui/ActionButton';
 import {D, T} from '../util/dates';
 
 function AssessmentListItem({assessment, onOpen, onDelete}) {
+  const [confirmVisible, setConfirmVisible] = useState(false);
+
   return (
     <View
       style={{
@@ -20,6 +22,42 @@ function AssessmentListItem({assessment, onOpen, onDelete}) {
         paddingVertical: 8,
         justifyContent: 'space-between',
       }}>
+      <Modal animationType="fade" transparent={false} visible={confirmVisible}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: 22,
+          }}>
+          <View
+            style={{
+              width: 240,
+              backgroundColor: Colors.white,
+            }}>
+            <Text>Are you sure?</Text>
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}>
+              <ActionButton
+                title="Cancel"
+                onPress={() => setConfirmVisible(false)}
+              />
+              <ActionButton
+                title="Delete"
+                onPress={() => {
+                  onDelete && onDelete();
+                  setConfirmVisible(false);
+                }}
+              />
+            </View>
+          </View>
+        </View>
+      </Modal>
+
       {assessment.createdAt && (
         <Text
           style={{
@@ -44,7 +82,7 @@ function AssessmentListItem({assessment, onOpen, onDelete}) {
         }}>
         <ActionButton
           title="Delete"
-          onPress={() => onDelete && onDelete()}
+          onPress={() => setConfirmVisible(true)}
           style={{
             marginRight: 8,
           }}
