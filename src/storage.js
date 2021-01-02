@@ -71,6 +71,16 @@ const getAssessment = async (idx) => {
   return assessment && typeof assessment === 'object' ? assessment : null;
 };
 
+export const createAssessment = async () => {
+  const json = await getDb();
+  json.assessments.push({
+    createdAt: new Date().getTime(),
+  });
+  const assessmentIndex = json.assessments.length - 1;
+  await updateDb(json);
+  return assessmentIndex;
+};
+
 const updateAssessment = async (idx, assessment) => {
   const json = await getDb();
   if (assessment) {
