@@ -5,31 +5,37 @@ import {useIsFocused} from '@react-navigation/native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {styles} from './styles';
 import {ActionButton} from '../ui/ActionButton';
+import {D, T} from '../util/dates';
 
 function AssessmentListItem({assessment, onOpen, onDelete}) {
   return (
     <View
       style={{
+        backgroundColor: Colors.white,
         display: 'flex',
         flexDirection: 'column',
-        marginLeft: 32,
-        marginRight: 32,
-        marginTop: 8,
+        marginHorizontal: 8,
         marginBottom: 8,
+        paddingHorizontal: 16,
+        paddingVertical: 8,
         justifyContent: 'space-between',
       }}>
-      <Text
-        style={{
-          marginBottom: 8,
-        }}>
-        Created {assessment.createdAt}
-      </Text>
-      <Text
-        style={{
-          marginBottom: 8,
-        }}>
-        Last updated {assessment.updatedAt}
-      </Text>
+      {assessment.createdAt && (
+        <Text
+          style={{
+            marginBottom: 8,
+          }}>
+          Created on <D milli={assessment.createdAt} /> at <T milli={assessment.createdAt} />
+        </Text>
+      )}
+      {assessment.updatedAt && (
+        <Text
+          style={{
+            marginBottom: 8,
+          }}>
+          Last updated on <D milli={assessment.updatedAt} /> at <T milli={assessment.updatedAt} />
+        </Text>
+      )}
       <View
         style={{
           display: 'flex',
@@ -94,14 +100,16 @@ export function HomeScreen({navigation}) {
 
   return (
     <View style={styles.body}>
-      <View
-        style={{
-          height: 200,
-          backgroundColor: Colors.lighter,
-        }}
-      />
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        {loading && <ActivityIndicator />}
+        <ActionButton
+          width={240}
+          title="Start new assessment"
+          onPress={() => newAssessment()}
+        />
+      </View>
       {assessments && !!assessments.length && (
-        <View style={{flex: 2}}>
+        <View style={{flex: 3}}>
           <FlatList
             data={assessments}
             renderItem={({item, index}) => (
@@ -115,14 +123,6 @@ export function HomeScreen({navigation}) {
           />
         </View>
       )}
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        {loading && <ActivityIndicator />}
-        <ActionButton
-          width={240}
-          title="Start new assessment"
-          onPress={() => newAssessment()}
-        />
-      </View>
     </View>
   );
 }
