@@ -1,18 +1,49 @@
 import React, {useEffect, useState} from 'react';
 import {createAssessment, deleteAssessment, getAssessments} from '../storage';
-import {ActivityIndicator, Button, FlatList, View, Text} from 'react-native';
+import {ActivityIndicator, FlatList, View, Text} from 'react-native';
 import {useIsFocused} from '@react-navigation/native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {styles} from './styles';
+import {ActionButton} from '../ui/ActionButton';
 
 function AssessmentListItem({assessment, onOpen, onDelete}) {
   return (
-    <View>
-      <Text>Created {assessment.createdAt}</Text>
-      <Text>Last updated {assessment.updatedAt}</Text>
-      <View>
-        <Button title="Open" onPress={() => onOpen && onOpen()} />
-        <Button title="Delete" onPress={() => onDelete && onDelete()} />
+    <View
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        marginLeft: 32,
+        marginRight: 32,
+        marginTop: 8,
+        marginBottom: 8,
+        justifyContent: 'space-between',
+      }}>
+      <Text
+        style={{
+          marginBottom: 8,
+        }}>
+        Created {assessment.createdAt}
+      </Text>
+      <Text
+        style={{
+          marginBottom: 8,
+        }}>
+        Last updated {assessment.updatedAt}
+      </Text>
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'flex-end',
+        }}>
+        <ActionButton
+          title="Delete"
+          onPress={() => onDelete && onDelete()}
+          style={{
+            marginRight: 8,
+          }}
+        />
+        <ActionButton title="Open" onPress={() => onOpen && onOpen()} />
       </View>
     </View>
   );
@@ -69,12 +100,8 @@ export function HomeScreen({navigation}) {
           backgroundColor: Colors.lighter,
         }}
       />
-      <View style={styles.sectionContainer}>
-        {loading && <ActivityIndicator />}
-        <Button title="Start new assessment" onPress={() => newAssessment()} />
-      </View>
       {assessments && !!assessments.length && (
-        <View style={{flex: 1, width: '100%'}}>
+        <View style={{flex: 2}}>
           <FlatList
             data={assessments}
             renderItem={({item, index}) => (
@@ -88,6 +115,14 @@ export function HomeScreen({navigation}) {
           />
         </View>
       )}
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        {loading && <ActivityIndicator />}
+        <ActionButton
+          width={240}
+          title="Start new assessment"
+          onPress={() => newAssessment()}
+        />
+      </View>
     </View>
   );
 }
