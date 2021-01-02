@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {createAssessment, deleteAssessment, getAssessments} from '../storage';
 import {ActivityIndicator, Button, FlatList, View, Text} from 'react-native';
-import { useIsFocused } from '@react-navigation/native';
+import {useIsFocused} from '@react-navigation/native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {styles} from './styles';
 
@@ -72,7 +72,9 @@ export function HomeScreen({navigation}) {
       <View style={styles.sectionContainer}>
         {loading && <ActivityIndicator />}
         <Button title="Start new assessment" onPress={() => newAssessment()} />
-        {assessments && !!assessments.length && (
+      </View>
+      {assessments && !!assessments.length && (
+        <View style={{flex: 1, width: '100%'}}>
           <FlatList
             data={assessments}
             renderItem={({item, index}) => (
@@ -84,8 +86,8 @@ export function HomeScreen({navigation}) {
             )}
             keyExtractor={(item) => item.createdAt + ''}
           />
-        )}
-      </View>
+        </View>
+      )}
     </View>
   );
 }
