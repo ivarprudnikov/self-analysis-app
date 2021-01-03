@@ -63,9 +63,9 @@ function AssessmentListItem({assessment, onOpen, onDelete}) {
           style={{
             marginBottom: 8,
           }}>
-          <span>Created on </span>
+          <Text>Created on </Text>
           <D milli={assessment.createdAt} />
-          <span> at </span>
+          <Text> at </Text>
           <T milli={assessment.createdAt} />
         </Text>
       )}
@@ -74,9 +74,9 @@ function AssessmentListItem({assessment, onOpen, onDelete}) {
           style={{
             marginBottom: 8,
           }}>
-          <span>Last updated on </span>
+          <Text>Last updated on </Text>
           <D milli={assessment.updatedAt} />
-          <span> at </span>
+          <Text> at </Text>
           <T milli={assessment.updatedAt} />
         </Text>
       )}
