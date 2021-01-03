@@ -103,6 +103,14 @@ export function HomeScreen({navigation}) {
   const [loading, setLoading] = useState(true);
   const [assessments, setAssessments] = useState(null);
   const isFocused = useIsFocused();
+  const isMountedRef = useRef(false);
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
 
   useEffect(() => {
     refreshAssessments();
@@ -112,11 +120,14 @@ export function HomeScreen({navigation}) {
     setLoading(true);
     return getAssessments()
       .then((data) => {
-        setAssessments(data || []);
-        setLoading(false);
+        if (isMountedRef.current === true) {
+          setAssessments(data || []);
+        }
       })
-      .catch(() => {
-        setLoading(false);
+      .finally(() => {
+        if (isMountedRef.current === true) {
+          setLoading(false);
+        }
       });
   };
 
