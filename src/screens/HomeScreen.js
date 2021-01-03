@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {createAssessment, deleteAssessment, getAssessments} from '../storage';
 import {ActivityIndicator, FlatList, View, Text, Modal} from 'react-native';
 import {useIsFocused} from '@react-navigation/native';
