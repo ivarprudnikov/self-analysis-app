@@ -1,6 +1,13 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useRef, useCallback} from 'react';
 import {createAssessment, deleteAssessment, getAssessments} from '../storage';
-import {ActivityIndicator, FlatList, View, Text, Alert} from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  View,
+  Text,
+  Alert,
+  Button,
+} from 'react-native';
 import {useIsFocused} from '@react-navigation/native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {styles} from './styles';
@@ -81,17 +88,6 @@ export function HomeScreen({navigation}) {
   const isFocused = useIsFocused();
   const isMountedRef = useRef(false);
 
-  useEffect(() => {
-    isMountedRef.current = true;
-    return () => {
-      isMountedRef.current = false;
-    };
-  }, []);
-
-  useEffect(() => {
-    refreshAssessments();
-  }, [isFocused, setLoading, setAssessments]);
-
   const refreshAssessments = () => {
     setLoading(true);
     return getAssessments()
@@ -111,7 +107,7 @@ export function HomeScreen({navigation}) {
     navigation.navigate('Assessment', {assessmentIndex: index});
   };
 
-  const newAssessment = () => {
+  const newAssessment = useCallback(() => {
     setLoading(true);
     return createAssessment()
       .then((index) => {
@@ -119,7 +115,7 @@ export function HomeScreen({navigation}) {
         navigation.navigate('Assessment', {assessmentIndex: index});
       })
       .catch(() => setLoading(false));
-  };
+  }, [navigation]);
 
   const removeAssessment = (index) => {
     setLoading(true);
@@ -129,18 +125,51 @@ export function HomeScreen({navigation}) {
       .catch(() => setLoading(false));
   };
 
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    refreshAssessments();
+  }, [isFocused, setLoading, setAssessments]);
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Button onPress={() => newAssessment()} title="New assessment" />
+      ),
+    });
+  }, [navigation, newAssessment]);
+
   return (
     <View style={styles.body}>
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        {loading && <ActivityIndicator />}
-        <ActionButton
-          width={240}
-          title="Start new assessment"
-          onPress={() => newAssessment()}
-        />
-      </View>
-      {assessments && !!assessments.length && (
-        <View style={{flex: 3}}>
+      {loading && (
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <ActivityIndicator />
+        </View>
+      )}
+      {!loading && (!assessments || !assessments.length) && (
+        <View
+          style={{
+            flex: 1,
+            padding: 32,
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+          <View />
+          <Text>Your assessments will appear here.</Text>
+          <ActionButton
+            onPress={() => newAssessment()}
+            title="Start a new assessment"
+            width={280}
+          />
+        </View>
+      )}
+      {!loading && assessments && !!assessments.length && (
+        <View style={{flex: 1}}>
           <FlatList
             data={assessments}
             renderItem={({item, index}) => (

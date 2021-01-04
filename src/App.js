@@ -23,11 +23,7 @@ const App: () => React$Node = () => {
       <StatusBar barStyle="dark-content" />
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen
-            name="Home"
-            component={HomeScreen}
-            options={{headerShown: false}}
-          />
+          <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Assessment" component={AssessmentScreen} />
         </Stack.Navigator>
       </NavigationContainer>
