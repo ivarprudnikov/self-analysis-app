@@ -47,7 +47,7 @@ export const getAssessments = async () => {
 
 const getAssessment = async (id) => {
   const assessments = await getAssessments();
-  const assessment = assessments[id];
+  const assessment = assessments.find((a) => a.key === id);
   return assessment && typeof assessment === 'object' ? assessment : null;
 };
 
@@ -89,5 +89,7 @@ export const storeAnswers = async (id, value) => {
   if (assessment != null) {
     assessment.answers = value;
     await updateAssessment(id, assessment);
+  } else {
+    throw `Assessment ${id} not found`;
   }
 };
