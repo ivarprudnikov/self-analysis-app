@@ -1,5 +1,9 @@
 import React, {useEffect, useState, useRef, useCallback} from 'react';
-import {createAssessment, deleteAssessment, getAssessments} from '../storage';
+import {
+  createAssessment,
+  deleteAssessment,
+  getAssessments,
+} from '../storage/storage';
 import {
   ActivityIndicator,
   FlatList,
@@ -104,15 +108,15 @@ export function HomeScreen({navigation}) {
   };
 
   const openAssessment = (index) => {
-    navigation.navigate('Assessment', {assessmentIndex: index});
+    navigation.navigate('Assessment', {assessmentKey: index});
   };
 
   const newAssessment = useCallback(() => {
     setLoading(true);
     return createAssessment()
-      .then((index) => {
+      .then((assessment) => {
         setLoading(false);
-        navigation.navigate('Assessment', {assessmentIndex: index});
+        navigation.navigate('Assessment', {assessmentKey: assessment.key});
       })
       .catch(() => setLoading(false));
   }, [navigation]);
@@ -172,14 +176,14 @@ export function HomeScreen({navigation}) {
         <View style={{flex: 1}}>
           <FlatList
             data={assessments}
-            renderItem={({item, index}) => (
+            renderItem={({item}) => (
               <AssessmentListItem
                 assessment={item}
-                onOpen={() => openAssessment(index)}
-                onDelete={() => removeAssessment(index)}
+                onOpen={() => openAssessment(item.key)}
+                onDelete={() => removeAssessment(item.key)}
               />
             )}
-            keyExtractor={(item) => item.createdAt + ''}
+            keyExtractor={(item) => item.key}
           />
         </View>
       )}

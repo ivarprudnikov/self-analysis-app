@@ -5,7 +5,7 @@
 import 'react-native-gesture-handler';
 import React, {useEffect} from 'react';
 import {StatusBar} from 'react-native';
-import {init} from './storage';
+import {init} from './storage/storage';
 import {ErrorBoundary} from './ErrorBoundary';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';

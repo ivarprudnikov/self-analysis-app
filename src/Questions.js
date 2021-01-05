@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Text, TextInput} from 'react-native';
-import {getAnswers, storeAnswers} from './storage';
+import {getAnswers, storeAnswers} from './storage/storage';
 
 const Question = ({label, value, onChange}) => {
   const [text, setText] = useState('');
@@ -55,14 +55,14 @@ const questionsUiSchema = [
   'find_work_mistakes',
 ];
 
-export const Questions = ({assessmentIndex = 0}) => {
+export const Questions = ({assessmentKey}) => {
   const [loading, setLoading] = useState(true);
   const [answers, setAnswers] = useState({});
 
   useEffect(() => {
     let mounted = true;
     const getData = () => {
-      getAnswers(assessmentIndex)
+      getAnswers(assessmentKey)
         .then((data) => {
           mounted && setAnswers(data || {});
           mounted && setLoading(false);
@@ -73,7 +73,7 @@ export const Questions = ({assessmentIndex = 0}) => {
     };
     getData();
     return () => (mounted = false);
-  }, [setLoading, setAnswers, assessmentIndex]);
+  }, [setLoading, setAnswers, assessmentKey]);
 
   if (loading) {
     return <Text>Loading ...</Text>;
@@ -82,7 +82,7 @@ export const Questions = ({assessmentIndex = 0}) => {
   const updateAnswers = (k, v) => {
     const updated = {...answers, [k]: v};
     setAnswers(updated);
-    storeAnswers(assessmentIndex, updated);
+    storeAnswers(assessmentKey, updated);
   };
 
   return (

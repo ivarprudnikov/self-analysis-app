@@ -4,17 +4,17 @@ import {Questions} from '../Questions';
 import {styles} from './styles';
 
 export function AssessmentScreen({route}) {
-  const {assessmentIndex} = route.params;
+  const {assessmentKey} = route.params;
   return (
     <ScrollView
       contentInsetAdjustmentBehavior="automatic"
       style={styles.scrollView}>
       <View style={styles.body}>
         <View style={styles.sectionContainer}>
-          <Text style={styles.sectionTitle}>Assessment #{assessmentIndex}</Text>
+          <Text style={styles.sectionTitle}>Assessment #{assessmentKey}</Text>
         </View>
         <View style={styles.sectionContainer}>
-          <Questions assessmentIndex={assessmentIndex} />
+          <Questions assessmentKey={assessmentKey} />
         </View>
       </View>
     </ScrollView>
