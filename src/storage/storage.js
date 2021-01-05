@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {checkDbErrors} from './validation';
 
 const STORAGE_KEY = '@all';
 
@@ -24,6 +25,11 @@ export const init = async () => {
       json.assessments = {};
     }
     await updateDb(json);
+  }
+  const initialized = await getDb();
+  const errors = checkDbErrors(initialized);
+  if (errors && errors.length) {
+    throw errors;
   }
 };
 
@@ -52,6 +58,7 @@ export const createAssessment = async () => {
   json.assessments[key] = {
     key: key,
     createdAt: createdAt,
+    answers: {},
   };
   await updateDb(json);
   return json.assessments[key];
