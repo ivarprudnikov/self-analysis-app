@@ -1,6 +1,6 @@
 import React from 'react';
 import {ScrollView, Text, View} from 'react-native';
-import {Questions} from '../Questions';
+import {Questions} from './Questions';
 import {styles} from './styles';
 
 export function AssessmentScreen({route}) {

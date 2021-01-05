@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Text, TextInput} from 'react-native';
-import {getAnswers, storeAnswers} from './storage/storage';
+import {getAnswers, storeAnswers} from '../storage/storage';
 
 const Question = ({label, value, onChange}) => {
   const [text, setText] = useState('');
