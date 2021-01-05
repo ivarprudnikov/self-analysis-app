@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "complain_feel_bad": {
+      "type": "string",
+      "title": "Do you complain often of “feeling bad”, and if so, what is the cause?"
+    },
+    "fault_others": {
+      "type": "string",
+      "title": "Do you find fault with other people at the slightest provocation?"
+    },
+    "find_work_mistakes": {
+      "type": "string",
+      "title": "Do you frequently find mistakes in your work, and if so, why?"
+    }
+  }
+}

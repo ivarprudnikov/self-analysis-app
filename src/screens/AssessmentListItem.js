@@ -3,6 +3,9 @@ import {Alert, Text, View} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {D, T} from '../util/dates';
 import {ActionButton} from '../ui/ActionButton';
+import questionsDataSchema from '../storage/questions.schema.json';
+
+const questionKeys = Object.keys(questionsDataSchema.properties);
 
 export function AssessmentListItem({assessment, onOpen, onDelete}) {
   const confirmDelete = () =>
@@ -19,18 +22,30 @@ export function AssessmentListItem({assessment, onOpen, onDelete}) {
       {cancelable: false},
     );
 
+  const answers = assessment.answers || {};
+  const answerKeys = Object.keys(answers);
+  const progress = Math.floor((answerKeys.length / questionKeys.length) * 100);
+
   return (
     <View
       style={{
         backgroundColor: Colors.white,
         display: 'flex',
         flexDirection: 'column',
-        marginHorizontal: 8,
         marginBottom: 8,
-        paddingHorizontal: 16,
-        paddingVertical: 8,
+        paddingHorizontal: 32,
+        paddingVertical: 16,
         justifyContent: 'space-between',
+        borderRadius: 8,
       }}>
+      <Text
+        style={{
+          fontSize: 24,
+          fontWeight: 'bold',
+          marginBottom: 8,
+        }}>
+        {progress}%
+      </Text>
       {assessment.createdAt && (
         <Text
           style={{

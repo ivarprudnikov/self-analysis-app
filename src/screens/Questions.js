@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {Text, TextInput} from 'react-native';
 import {getAnswers, storeAnswers} from '../storage/storage';
+import questionsDataSchema from '../storage/questions.schema.json';
+import questionsUiSchema from '../storage/questions.uiSchema.json';
 
 const Question = ({label, value, onChange}) => {
   const [text, setText] = useState('');
@@ -29,31 +31,6 @@ const Question = ({label, value, onChange}) => {
     </>
   );
 };
-
-const questionsDataSchema = {
-  type: 'object',
-  properties: {
-    complain_feel_bad: {
-      type: 'string',
-      title:
-        'Do you complain often of “feeling bad”, and if so, what is the cause?',
-    },
-    fault_others: {
-      type: 'string',
-      title:
-        'Do you find fault with other people at the slightest provocation?',
-    },
-    find_work_mistakes: {
-      type: 'string',
-      title: 'Do you frequently find mistakes in your work, and if so, why?',
-    },
-  },
-};
-const questionsUiSchema = [
-  'complain_feel_bad',
-  'fault_others',
-  'find_work_mistakes',
-];
 
 export const Questions = ({assessmentKey}) => {
   const [loading, setLoading] = useState(true);

@@ -97,7 +97,7 @@ export function HomeScreen({navigation}) {
         </View>
       )}
       {!loading && assessments && !!assessments.length && (
-        <View style={{flex: 1}}>
+        <View style={{flex: 1, padding: 8}}>
           <FlatList
             data={assessments}
             renderItem={({item}) => (
