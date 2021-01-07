@@ -1,8 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Text, TextInput} from 'react-native';
 import {getAnswers, storeAnswers} from '../storage/storage';
-import questionsDataSchema from '../storage/questions.schema.json';
-import questionsUiSchema from '../storage/questions.uiSchema.json';
+const questionsDataSchema = require('../storage/questions.schema.json');
 
 const Question = ({label, value, onChange}) => {
   const [text, setText] = useState('');
@@ -64,7 +63,7 @@ export const Questions = ({assessmentKey}) => {
 
   return (
     <>
-      {questionsUiSchema.map((key) => (
+      {Object.keys(questionsDataSchema.properties).map((key) => (
         <Question
           key={key}
           label={questionsDataSchema.properties[key].title}
