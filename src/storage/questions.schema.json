@@ -1,17 +1,122 @@
 {
   "type": "object",
   "properties": {
-    "complain_feel_bad": {
+    "attained_goal": {
       "type": "string",
-      "title": "Do you complain often of “feeling bad”, and if so, what is the cause?"
+      "title": "Have I attained the goal which I established as my objective for this year?",
+      "description": "You should work with a definite yearly objective to be attained as a part of your major life objective."
     },
-    "fault_others": {
+    "delivered_service_quality": {
       "type": "string",
-      "title": "Do you find fault with other people at the slightest provocation?"
+      "title": "Have I delivered service of the best possible quality of which I was capable, or could I have improved any part of this service?"
     },
-    "find_work_mistakes": {
+    "delivered_service_quantity": {
       "type": "string",
-      "title": "Do you frequently find mistakes in your work, and if so, why?"
+      "title": "Have I delivered service in the greatest possible quantity of which I was capable?"
+    },
+    "had_cooperative_conduct": {
+      "type": "string",
+      "title": "Has the spirit of my conduct been harmonious and cooperative at all times?"
+    },
+    "permitted_procrastination": {
+      "type": "string",
+      "title": "Have I permitted the habit of procrastination to decrease my efficiency and if so, to what extent?"
+    },
+    "improved_personality": {
+      "type": "string",
+      "title": "Have I improved my personality, and if so, in what ways?"
+    },
+    "followed_plans_to_completion": {
+      "type": "string",
+      "title": "Have I been persistent in following my plans through to completion?"
+    },
+    "reached_prompt_decisions": {
+      "type": "string",
+      "title": "Have I reached decisions promptly and definitely on all occasions?"
+    },
+    "permitted_fears": {
+      "type": "string",
+      "title": "Have I permitted any one or more of the six basic fears to decrease my efficiency?",
+      "description": "Six basic fears: poverty, criticism, ill health, loss of love of someone, old age, death"
+    },
+    "been_too_cautious": {
+      "type": "string",
+      "title": "Have I been either 'over-cautious,' or 'under-cautious'?"
+    },
+    "had_relationship_with_associates": {
+      "type": "string",
+      "title": "Has my relationship with my associates in work been pleasant, or unpleasant?",
+      "description": "If it has been unpleasant, has the fault been partly, or wholly mine?"
+    },
+    "lacked_concentration": {
+      "type": "string",
+      "title": "Have I dissipated any of my energy through lack of concentration of effort?"
+    },
+    "was_open_minded": {
+      "type": "string",
+      "title": "Have I been open-minded and tolerant in connection with all subjects?"
+    },
+    "how_service_was_improved": {
+      "type": "string",
+      "title": "In what way have I improved my ability to render service?"
+    },
+    "was_intemperate": {
+      "type": "string",
+      "title": "Have I been intemperate in any of my habits?"
+    },
+    "was_egotistic": {
+      "type": "string",
+      "title": "Have I expressed, either openly or secretly, any form of egotism?",
+      "description": "Excessive use of the first person singular personal pronoun, the practice of talking about oneself too much, an exaggerated sense of self-importance."
+    },
+    "was_respected": {
+      "type": "string",
+      "title": "Has my conduct toward my associates been such that it has induced them to respect me?"
+    },
+    "used_guesswork_or_analysis": {
+      "type": "string",
+      "title": "Have my opinions and decisions been based upon guesswork, or accuracy of analysis and thought?"
+    },
+    "followed_budgets": {
+      "type": "string",
+      "title": "Have I followed the habit of budgeting my time, my expenses, and my income, and have I been conservative in these budgets?"
+    },
+    "engaged_in_unprofitable_effort": {
+      "type": "string",
+      "title": "How much time have I devoted to unprofitable effort which I might have used to better advantage?"
+    },
+    "how_change_time_and_habit": {
+      "type": "string",
+      "title": "How may I re-budget my time, and change my habits so I will be more efficient during the coming year?"
+    },
+    "was_guilty_of_immoral_actions": {
+      "type": "string",
+      "title": "Have I been guilty of any conduct which was not approved by my conscience?"
+    },
+    "provided_more_service_than_price": {
+      "type": "string",
+      "title": "In what ways have I rendered more service and better service than I was paid to render?"
+    },
+    "was_unfair": {
+      "type": "string",
+      "title": "Have I been unfair to anyone, and if so, in what way?"
+    },
+    "satisfied_with_my_services": {
+      "type": "string",
+      "title": "If I had been the purchaser of my own services for the year, would I be satisfied with my purchase?"
+    },
+    "have_matching_vocation": {
+      "type": "string",
+      "title": "Am I in the right vocation, and if not, why not?"
+    },
+    "customer_satisfied_with_my_services": {
+      "type": "string",
+      "title": "Has the purchaser of my services been satisfied with the service I have rendered, and if not, why not?"
+    },
+    "my_success_rating": {
+      "type": "string",
+      "title": "What is my present rating on the fundamental principles of success?",
+      "description": "Make this rating fairly, and frankly, and have it checked by someone who is courageous enough to do it accurately."
     }
   }
 }
