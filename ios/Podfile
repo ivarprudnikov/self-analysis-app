@@ -22,12 +22,3 @@ target 'SelfAnalysisQuestionsApp' do
     flipper_post_install(installer)
   end
 end
-
-target 'SelfAnalysisQuestionsApp-tvOS' do
-  # Pods for SelfAnalysisQuestionsApp-tvOS
-
-  target 'SelfAnalysisQuestionsApp-tvOSTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-end
