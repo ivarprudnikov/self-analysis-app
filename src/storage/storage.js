@@ -5,7 +5,7 @@ const STORAGE_KEY = '@all';
 
 const getDb = async () => {
   const jsonString = await AsyncStorage.getItem(STORAGE_KEY);
-  return jsonString != null ? JSON.parse(jsonString) : null;
+  return jsonString != null ? JSON.parse(jsonString) : {};
 };
 const updateDb = async (val) =>
   await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(val));
